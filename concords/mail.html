@@ -1,0 +1,74 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="favicon.ico">
+    <link href='https://fonts.googleapis.com/css?family=Playfair+Display:900|Raleway:300' rel='stylesheet' type='text/css'>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- Improved cross-browser compatibility -->
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link rel="stylesheet" href="css/ie10-viewport-bug-workaround.css">
+    <!-- Import Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/signin.css">
+<title>自動發送E-mail</title>
+<style>
+.mail .container{
+ width:600px; 
+}
+.mail{
+ font-family:微軟正黑體;
+ font-size:22px;
+}
+		body {
+			background-image:url("images/mailback.jpg")
+			
+		}
+</style>
+</head>
+<header>
+
+</header>
+<body>
+<div class="mail">
+    <div class="container">
+        <div class="header" style="text-align:center; font-size:36px; padding:30px 0">
+        聯絡我
+        </div>
+    <form id="msg" name="msg" method="post" action="">
+      <div class="form-group">
+        <label for="nickname">暱稱</label>
+        <input type="text" class="form-control" id="nickname" name="nickname" placeholder="輸入您的暱稱">
+      </div>
+      <div class="form-group">
+        <label for="email">電子郵件信箱</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="輸入E-mail">
+      </div>
+      <div class="form-group">
+        <label for="subject">信件主旨</label>
+        <input type="text" class="form-control" id="subject" name="subject" placeholder="輸入主旨">
+      </div>
+      <div class="form-group">
+        <label for="content">信件內容</label>
+        <textarea class="form-control" id="content" name="content" rows="5"></textarea>
+      </div>
+      <div align="right">
+	<div class="col-sm-15">	
+       <button class="btn btn-lg btn-danger btn-block" type="submit"  >寄出</button>
+	</div>
+      </div>
+    </form>
+    </div>
+</div>
+
+</body>
+
+
+</html>
+<!-- Bootstrap core JavaScript -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="js/custom.js"></script>
