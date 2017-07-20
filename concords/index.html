@@ -16,7 +16,6 @@
     <link rel="icon" href="favicon.ico">
     <title>好康報報|登入</title>
     <link href='https://fonts.googleapis.com/css?family=Playfair+Display:900|Raleway:300' rel='stylesheet' type='text/css'>
-    <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <!-- Improved cross-browser compatibility -->
     <link rel="stylesheet" href="css/normalize.css">
@@ -34,30 +33,30 @@
 <br><br><br><br><br>
     <div class="container">
         <br/>
-        <form class="form-horizontal col-md-6 col-xs-8" name="form" method="post" action="connect.php">
+		<div class="form-horizontal col-md-6 col-xs-8"  >
 			<br>
 			<span>
-				<div class="form-group">
+				<div class="form-group" >
 					<div class="col-sm-10">
-						<input type="text" name="id" class="form-control" placeholder="請輸入帳號" required autofocus>
+						<input type="text" id="id" class="form-control" placeholder="請輸入帳號" >
 					</div>
 				</div>
 				
 				<div class="form-group">
 					<div class="col-sm-10">
-						<input type="password" name="pw" class="form-control" placeholder="請輸入密碼" required>
+						<input type="password" id="pw" class="form-control" placeholder="請輸入密碼" >
 					</div>
 				</div>
 				
 				<div class="form-group">
-					<div class="checkbox col-sm-offset-1 col-sm-4">
+					<div class="checkbox col-sm-offset-1 col-sm-10">
 						<input type="checkbox" name="remember" value="remember-me">
 						<label for="remember">Remember me</label>
 					</div>
 				</div>
 				<div class="col-sm-10">												 
 					<div class="form-group">
-						<button class="btn btn-lg btn-danger btn-block"  type="submit" name="button">登入</button>
+						<button class="btn btn-lg btn-danger btn-block" id="login" >登入</button>
 					</div>
 				</div>
 				<div class="col-sm-10">												 
@@ -67,10 +66,51 @@
 				</div>
 			</span>
 			<br><br><br><br><br><br><br><br><br><br><br><br><br><br>;
-        </form>
+		</div>
         <br/><br/>
 
     </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="js/custom.js"></script>
+<script>
+    $(document).ready(function(){
+		
+		
+		$("#id").on("keyup",function(){
+			console.log($(this).val());
+		});
+        $("#login").on('click', function(){
+			
+			
+			var id = $('#id').val();
+			var pw = $('#pw').val();
+            $.ajax({
+				url: './connect.php',
+                type : "POST",
+                dataType : 'json',
+				data:{id:id,pw:pw},
+				
+                success:function(result){
+					if (result.status==1){
+						alert("歡迎登入"+result.name);
+						window.location.replace('connect_user.html');
+					}
+					else if (result.status==2){
+						alert("歡迎登入管理者");
+						window.location.replace('connect_admin.html');
+					}
+					else{
+						alert("請輸入正確帳號密碼");
+					}
+                },
+                error:function(result) {
+                   	console.log(JSON.stringify(result));
+                }
+            });
+        });
+    });
+ 
+</script>
 </body>
 <footer>
     <div id="footer" class="container-fluid">

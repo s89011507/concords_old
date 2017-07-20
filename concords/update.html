@@ -33,20 +33,20 @@
 <body>
 
 		<div class="container">
-			<form class="form-horizontal col-md-6 col-xs-8" name="form" method="post" action="update_finish.php">
+			<div class="form-horizontal col-md-6 col-xs-8" >
 
 				<span>
 					<div class="form-group">
 						<div class="col-sm-10">
 						<h2>密碼更新</h2>
 						<br>
-						<form name=\"form\" method=\"post\" action=\"update_finish.php\">
-					<input type="password" name="password" class="form-control" placeholder="請輸入密碼"/>
-					<input type="password" name="password2" class="form-control" placeholder="再一次輸入密碼"/>
-					<input type="text" name="name" class="form-control" placeholder="姓名"/>
-					<input type="text" name="lineid" class="form-control" placeholder="LineID"/>
-					<input type="text" name="mailbox" class="form-control" placeholder="信箱"/>
-					<input type="text" name="cellphone" class="form-control" placeholder="手機號碼"/>
+					
+					<input type="password" name="password" id="password" class="form-control" placeholder="請輸入密碼"/>
+					<input type="password" name="password2" id="password2" class="form-control" placeholder="再一次輸入密碼"/>
+					<input type="text" name="name" id="name" class="form-control" placeholder="姓名"/>
+					<input type="text" name="lineid" id="lineid" class="form-control" placeholder="LineID"/>
+					<input type="text" name="mailbox" id="mailbox" class="form-control" placeholder="信箱"/>
+					<input type="text" name="cellphone" id="cellphone" class="form-control" placeholder="手機號碼"/>
 							</div>
 					</div>
 					
@@ -54,14 +54,58 @@
 
 					<div class="form-group">
 						<div class="col-sm-10">
-					<button class="btn btn-lg btn-danger btn-block" class="form-control" type="submit" value="確定" name="button">確定</button>
+					<button class="btn btn-lg btn-danger btn-block"  class="form-control" id="update" >確定</button>
 						</div>
 					</div>
-					</form>
+					
 				</span>
 			</div>
 		</div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="js/custom.js"></script>
+<script>
+    $(document).ready(function(){
+     
+        $("#update").on('click', function(){
+			var password = $('#password').val();
+			var password2 = $('#password2').val();
+			var name = $('#name').val();
+			var lineid = $('#lineid').val();
+			var mailbox = $('#mailbox').val();
+			var cellphone = $('#cellphone').val();
+			
+            $.ajax({
+				
+				url: 'update_finish.php',
+                type : "POST",
+                dataType : 'json',
+				
+                data:{'password':password,'password2':password2,'name':name,'lineid':lineid,'cellphone':cellphone,'mailbox':mailbox},
+                success:function(result){
+					if(result.status == 1){
+						alert("修改成功");
+						window.location.replace('member.html');
+						
+					}
+					else if(result.status == 2){
+						alert("修改失敗");
+						
+					}
+					else if(result.status==3){
+						alert("輸入錯誤");
+						
+					}
+                },
+                error:function(result) {
+                   	alert("修改成功4");
+                }
+            });
+        });
+ 
+    });
+ 
+</script>
 
 </body>
 </html>

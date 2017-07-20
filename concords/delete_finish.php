@@ -1,26 +1,22 @@
-<?php session_start(); ?>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <?php
-include("mysql_connect.inc.php");
+
+$con = mysqli_connect("localhost","root","1234","test");
+mysqli_set_charset($con,"utf8");
+// Check connection
+if (mysqli_connect_errno()){
+  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+};
+
 $id = $_POST['id'];
-if($_SESSION['username'] != null)
-{
-        //刪除資料庫資料語法
-        $sql = "delete from login where id='$id'";
-        if(mysqli_query($con,$sql))
-        {
-                echo '刪除成功!';
-                echo '<meta http-equiv=REFRESH CONTENT=2;url=admin.php>';
-        }
-        else
-        {
-                echo '刪除失敗!';
-                echo '<meta http-equiv=REFRESH CONTENT=2;url=admin.php>';
-        }
+
+$sql = "DELETE FROM `login` WHERE id='$id'";
+if(mysqli_query($con,$sql)){
+	$result = array('delete'  =>"yes");
+	echo json_encode($result);
 }
-else
-{
-        echo '您無權限觀看此頁面!';
-        echo '<meta http-equiv=REFRESH CONTENT=2;url=index.php>';
+else{
+	$result = array('delete'  =>"no");
+	echo json_encode($result);
 }
+
 ?>

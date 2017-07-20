@@ -1,3 +1,4 @@
+
 <html>
 
 
@@ -16,19 +17,39 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="favicon.ico">
-    <title>好康報報|登入</title>
+    <title>好康報報|使用者</title>
     <link href='https://fonts.googleapis.com/css?family=Playfair+Display:900|Raleway:300' rel='stylesheet' type='text/css'>
-    <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <!-- Improved cross-browser compatibility -->
     <link rel="stylesheet" href="css/normalize.css">
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link rel="stylesheet" href="css/ie10-viewport-bug-workaround.css">
-    <!-- Import Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/signin.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
+
+
+$(document).ready(function(){
+	$("#logout2").on('click', function(){
+		$.ajax({
+			url: 'logout.php',
+			type : "POST",
+			dataType : 'json',
+			success:function(result){
+				if (result.register != null){
+					window.location.replace('connect_logout.html');
+				}
+				else{
+					alert("登出失敗");
+				}
+			},
+			error:function(result) {
+				console.log(JSON.stringify(result));
+			}
+		});
+	});
+});
+
 $(function(){
 	// 預設顯示第一個 Tab
 	var _showTab = 0;
@@ -36,12 +57,12 @@ $(function(){
 		// 一開的頁面長甚麼樣子
 		var $tab = $(this);
  
-		var $defaultLi = $('ul.tabs', $tab).eq(_showTab).addClass('active');
+		var $defaultLi = $('ul.tabs a', $tab).eq(_showTab).addClass('active');
 		$($defaultLi.find('button').attr('href')).siblings().hide();
 		
 		// 當其中一個被點擊
 		
-		$('ul.tabs li', $tab).click(function() {
+		$('ul.tabs a', $tab).click(function() {
 			
 			var $this = $(this),
 				_clickTab = $this.find('button').attr('href');
@@ -66,43 +87,28 @@ $(function(){
 </header>
 <body>
 <br><br><br>
-
-<form class="form-horizontal col-md-12 col-xs-12">
-	<a href="logout.php" class="button1">登出</a>
-	<a href="update.html" class="button1">修改</a>
-	<br>
-</form>
-	
-	
-    
-
-<div class="abgne_tab" id="b" >
+<div class="form-horizontal col-md-12 col-xs-12 ">
+<a id="logout2" class="button1">登出</a>
+<a href="update.html" class="button1">修改</a>
+<br><br>
+</div>
+	<div class="abgne_tab" id="b" >
 		
-		<ul class="tabs" >
-		<form class="form-horizontal col-md-4 col-xs-4">
-			<li><button href="#tab1" class="button1">本日焦點</button></li>
-		</form>
-		<form class="form-horizontal col-md-4 col-xs-4">
-			<li><button href="#tab2" class="button1">財經新聞</button></li>
-		</form>
-		<form class="form-horizontal col-md-4 col-xs-4">
-			<li><button href="#tab3" class="button1">體育新聞</button></li>
-		</form>
-		<form class="form-horizontal col-md-4 col-xs-4">
-			<li><button href="#tab4" class="button1">娛樂新聞</button></li>
-		</form>
-		<form class="form-horizontal col-md-4 col-xs-4">
-			<li><button href="#tab5" class="button1">健康新聞</button></li>
-		</form>
-		<form class="form-horizontal col-md-4 col-xs-4">
-			<li><button href="#tab6" class="button1">自訂搜尋</button></li>
-		</form>
-			<l>
-			
+		<ul class="tabs" class="form-horizontal col-md-12 col-xs-12">
+				
+				<br>
+				<a><button href="#tab1" class="button1">本日焦點</button></a>
+				<a><button href="#tab2" class="button1">財經新聞</button></a>
+				<a><button href="#tab3" class="button1">體育新聞</button></a>
+				<br><br>
+				<a><button href="#tab4" class="button1">娛樂新聞</button></a>
+				<a><button href="#tab5" class="button1">健康新聞</button></a>
+				<a><button href="#tab6" class="button1">自訂搜尋</button></a>
+				
 		</ul>
-		</form>
+
 		
-		<form class="form-horizontal col-md-12 col-xs-12 col-md-offset">
+	<div class="form-horizontal col-md-12 col-xs-12 col-md-offset">
 		<div class="tab_container">
 			<div id="tab1" class="tab_content">
 				<h2>本日新聞</h2>
@@ -372,7 +378,7 @@ $(function(){
 			</div>
 		</div>
 	</div>
-	</form>
+	</div>
 
 
 

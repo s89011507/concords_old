@@ -1,35 +1,41 @@
-<?php session_start(); ?>
-<!--上方語法為啟用session，此語法要放在網頁最前方-->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<?php
-//連接資料庫
-//只要此頁面上有用到連接MySQL就要include它
-include("mysql_connect.inc.php");
-$id = $_POST['id'];
-$pw = $_POST['pw'];
-//搜尋資料庫資料
+<?php 
+session_start();
+$id = $_POST["id"];
+$pw = $_POST["pw"];
+$_SESSION['id']=$id;
+$con = mysqli_connect("localhost","root","1234","test");
+
+mysqli_set_charset($con,"utf8");
+if (mysqli_connect_errno()){
+  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+};
+
+
+header("Content-type: application/json");  
+
+
+
 $result = mysqli_query($con,"SELECT * FROM login where id = '$id'");
-$row = @mysqli_fetch_row($result);
+$row = mysqli_fetch_row($result);
 $result2 = mysqli_query($con,"SELECT * FROM admin where id = '$id'");
-$row2 = @mysqli_fetch_row($result2);
-//判斷帳號與密碼是否為空白
-//以及MySQL資料庫裡是否有這個會員
-if($id != null && $pw != null && $row[1] == $id && $row[2] == $pw)
+$row2 = mysqli_fetch_row($result2);
+
+if($_SESSION['id'] != null && $id != null && $pw != null && $row[1] == $id && $row[2] == $pw)
 {
-        //將帳號寫入session，方便驗證使用者身份
-        $_SESSION['username'] = $id;
-        echo '<meta http-equiv=REFRESH CONTENT=1;url=member.html>';
+	$json = array('status'  => 1,'name'=>$_SESSION['id']);
+	echo json_encode($json);
 }
 elseif($id != null && $pw != null && $row2[1] == $id && $row2[2] == $pw)
 {
-	//將帳號寫入session，方便驗證使用者身份
-        $_SESSION['username'] = $id;
-        echo '<meta http-equiv=REFRESH CONTENT=1;url=admin.html>';
+	$json = array('status'  => 2);
+	echo json_encode($json);
+  
 }
 
 else
 {
-       
-        echo '<meta http-equiv=REFRESH CONTENT=1;url=connect_error.html>';
-}
+	$json = array('status'  => 3);
+	echo json_encode($json);
+} 
+
 ?>
