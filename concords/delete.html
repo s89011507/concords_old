@@ -1,105 +1,110 @@
 <html>
+<!--
+刪除帳號頁面
+-->
 <head>
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="favicon.ico">
     <title>好康報報|刪除帳號</title>
     <link href='https://fonts.googleapis.com/css?family=Playfair+Display:900|Raleway:300' rel='stylesheet' type='text/css'>
-    <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <!-- Improved cross-browser compatibility -->
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link rel="stylesheet" href="css/ie10-viewport-bug-workaround.css">
-    <!-- Import Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
 	
 	<style>
-	body {
+		body{
 			background-image: url("images/secondback.jpg");
 			margin-top:110px;
 		}
 	</style>
 	
-	
-
 </head>
 
 <header>
-
 </header>
+
 <body>
 
-		<div class="container">
-			<div class="form-horizontal col-md-6 col-xs-8"  >
-
-				<span>
-					<div class="form-group">
-						<div class="col-sm-10">
-						<h2>刪除帳號</h2>
-						<br>
-						
-					<input type="text" name="id" id="id" class="form-control" placeholder="請輸入帳號"/>
-					<input type="text" name="id2" id="id2 "class="form-control" placeholder="再一次輸入帳號"/>
-					
-							</div>
+	<div class="container">
+		<div class="form-horizontal col-md-6 col-xs-8">
+			<span>
+				<div class="form-group">
+					<div class="col-sm-10">
+						<h2>刪除帳號</h2><br>
+						<input type="text" name="id" id="id" class="form-control" placeholder="請輸入帳號"/>
+						<input type="text" name="id2" id="id2 "class="form-control" placeholder="再一次輸入帳號"/>
+				
 					</div>
-					
-					<br><br>
+				</div>
+				<br><br>
 
-					<div class="form-group">
-						<div class="col-sm-10">
-					<button class="btn btn-lg btn-danger btn-block" class="form-control" id="delete">確定刪除</button>
-						</div>
+				<div class="form-group">
+					<div class="col-sm-10">
+						<button class="btn btn-lg btn-danger btn-block" class="form-control" id="delete">確定刪除</button>
 					</div>
-					
-				</span>
-			</div>
+				</div>	
+			</span>
 		</div>
-
-
+	</div>
+	
 </body>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script type="text/javascript" src="js/custom.js"></script>
+
 <script>
-    $(document).ready(function(){
-     
-        $("#delete").on('click', function(){
-			
-			
-			var id = $('#id').val();
-			var id2 = $('#id2').val();
-            $.ajax({
-				url: 'delete_finish.php',
-                type : "POST",
-                dataType : 'json',
-				data:{id:id,id2:id2},
-				
-                success:function(result){
-					if (result.delete=="yes"){
-						alert("刪除成功");
-						window.location.replace('admin.html');
-					}
-					else if (result.delete=="no"){
-						alert("刪除失敗");
-						window.location.replace('delete.html');
-					}
-					else{
-						alert("請輸入正確帳號密碼");
-					}
-                },
-                error:function(result) {
-                   	console.log(JSON.stringify(result));
-                }
-            });
-        });
+
+$(document).ready(function(){
+
+	$(window).load(function(){
+		$.ajax({
+			url: 'session.php',
+			type : "POST",
+			dataType : 'json',
+			success:function(result){
+				if (result.status=="yes"){
+				}
+				else{
+					window.location.replace('login_wrong.html');
+				}
+			},
+			error:function(result) {
+				console.log(JSON.stringify(result));
+			}
+		});
+	});
  
-    });
+	$("#delete").on('click', function(){
+		var id = $('#id').val();
+		var id2 = $('#id2').val();
+		$.ajax({
+			url: 'delete_finish.php',
+			type : "POST",
+			dataType : 'json',
+			data:{id:id,id2:id2},
+			
+			success:function(result){
+				if (result.delete=="yes"){
+					alert("刪除成功");
+					window.location.replace('admin.html');
+				}
+				else if (result.delete=="no"){
+					alert("刪除失敗");
+					window.location.replace('delete.html');
+				}
+				else{
+					alert("請輸入正確帳號密碼");
+				}
+			},
+			error:function(result) {
+				console.log(JSON.stringify(result));
+			}
+		});
+	});
+});
  
 </script>
 </html>
-<!-- Bootstrap core JavaScript -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script type="text/javascript" src="js/custom.js"></script>

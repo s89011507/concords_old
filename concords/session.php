@@ -1,13 +1,15 @@
 <?php
+/*
+判斷SESSION['id']是否有值
+*/
 session_start(); 
-if( $_SESSION['id']!=null)
-{
-	$json = array('status'="yes");
+if(empty($_SESSION['id'])){
+	$json = array('status'=>"no");
 	echo json_encode($json);
 }
 else
 {
-	$json = array('status'=>"no");
+	$json = array('status'=>"yes");
 	echo json_encode($json);
 }
 ?>

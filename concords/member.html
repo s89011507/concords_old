@@ -1,7 +1,8 @@
-
 <html>
-
-
+<!--
+使用者介面
+觀看新聞&修改帳號內容
+-->
 <head>
     <style>
         .place {
@@ -9,10 +10,10 @@
         }
 		body {
 			background-image: url("images/breaking_news.jpg");
-			background-size: 100%;
-			
+			background-size: 100%;	
 		}
     </style>
+	
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,96 +26,106 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/signin.css">
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script>
-
-
-$(document).ready(function(){
-	$("#logout2").on('click', function(){
-		$.ajax({
-			url: 'logout.php',
-			type : "POST",
-			dataType : 'json',
-			success:function(result){
-				if (result.register != null){
-					window.location.replace('connect_logout.html');
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script type="text/javascript" src="js/custom.js"></script>
+	<script>
+	$(document).ready(function(){
+	
+		$(window).load(function(){
+			$.ajax({
+				url: 'session.php',
+				type : "POST",
+				dataType : 'json',
+				success:function(result){
+					if (result.status=="yes"){
+					}
+					else{
+						window.location.replace('login_wrong.html');
+					}
+				},
+				error:function(result) {
+					console.log(JSON.stringify(result));
 				}
-				else{
-					alert("登出失敗");
+			});
+		});
+		
+		$("#logout2").on('click', function(){
+			$.ajax({
+				url: 'logout.php',
+				type : "POST",
+				dataType : 'json',
+				success:function(result){
+					if (result.register != null){
+						window.location.replace('connect_logout.html');
+					}
+					else{
+						alert("登出失敗");
+					}
+				},
+				error:function(result) {
+					console.log(JSON.stringify(result));
 				}
-			},
-			error:function(result) {
-				console.log(JSON.stringify(result));
-			}
+			});
 		});
 	});
-});
 
-$(function(){
-	// 預設顯示第一個 Tab
-	var _showTab = 0;
-	$('.abgne_tab').each(function(){
-		// 一開的頁面長甚麼樣子
-		var $tab = $(this);
- 
-		var $defaultLi = $('ul.tabs a', $tab).eq(_showTab).addClass('active');
-		$($defaultLi.find('button').attr('href')).siblings().hide();
-		
-		// 當其中一個被點擊
-		
-		$('ul.tabs a', $tab).click(function() {
-			
-			var $this = $(this),
-				_clickTab = $this.find('button').attr('href');
+	$(function(){
+		var _showTab = 0;
+		$('.abgne_tab').each(function(){
+			// 一開的頁面長甚麼樣子
+			var $tab = $(this);
+	 
+			var $defaultLi = $('ul.tabs a', $tab).eq(_showTab).addClass('active');
+			$($defaultLi.find('button').attr('href')).siblings().hide();
+			// 當其中一個被點擊
+			$('ul.tabs a', $tab).click(function() {
 				
-			// 把目前點擊到的 li 頁籤加上 .active
-			// 並把兄弟元素中有 .active 的都移除 class
-			$this.addClass('active').siblings('.active').removeClass('active');
-			
-			$(_clickTab).stop(false, true).fadeIn().siblings().hide();
- 
-			return false;
-		}).find('button').focus(function(){
-			this.blur();
+				var $this = $(this),
+					_clickTab = $this.find('button').attr('href');
+				// 把目前點擊到的 li 頁籤加上 .active
+				// 並把兄弟元素中有 .active 的都移除 class
+				$this.addClass('active').siblings('.active').removeClass('active');
+				$(_clickTab).stop(false, true).fadeIn().siblings().hide();
+				return false;
+			}).find('button').focus(function(){
+				this.blur();
+			});
 		});
 	});
-});
-</script>
-
+	
+	</script>
 </head>
-<header>
 
+<header>
 </header>
+
 <body>
-<br><br><br>
-<div class="form-horizontal col-md-12 col-xs-12 ">
-<a id="logout2" class="button1">登出</a>
-<a href="update.html" class="button1">修改</a>
-<br><br>
-</div>
+	<br><br><br>
+	<div class="form-horizontal col-md-12 col-xs-12 ">
+		<a id="logout2" class="button1">登出</a>
+		<a href="update.html" class="button1">修改</a>
+		<br><br>
+	</div>
+	
 	<div class="abgne_tab" id="b" >
-		
 		<ul class="tabs" class="form-horizontal col-md-12 col-xs-12">
-				
-				<br>
-				<a><button href="#tab1" class="button1">本日焦點</button></a>
-				<a><button href="#tab2" class="button1">財經新聞</button></a>
-				<a><button href="#tab3" class="button1">體育新聞</button></a>
-				<br><br>
-				<a><button href="#tab4" class="button1">娛樂新聞</button></a>
-				<a><button href="#tab5" class="button1">健康新聞</button></a>
-				<a><button href="#tab6" class="button1">自訂搜尋</button></a>
-				
+			<br>
+			<a><button href="#tab1" class="button1">本日焦點</button></a>
+			<a><button href="#tab2" class="button1">財經新聞</button></a>
+			<a><button href="#tab3" class="button1">體育新聞</button></a>
+			<br><br>
+			<a><button href="#tab4" class="button1">娛樂新聞</button></a>
+			<a><button href="#tab5" class="button1">健康新聞</button></a>
+			<a><button href="#tab6" class="button1">自訂搜尋</button></a>		
 		</ul>
 
 		
-	<div class="form-horizontal col-md-12 col-xs-12 col-md-offset">
-		<div class="tab_container">
-			<div id="tab1" class="tab_content">
-				<h2>本日新聞</h2>
-				<p>
+		<div class="form-horizontal col-md-12 col-xs-12 col-md-offset">
+			<div class="tab_container">
+				<div id="tab1" class="tab_content">
+					<h2>本日新聞</h2>
+					<p>
 					<script type="text/javascript"> 
-					<!-- 
 					rssfeed_url = new Array(); 
 					rssfeed_url[0]="https://news.google.com/news/rss/headlines?ned=tw&hl=zh-TW";  
 					rssfeed_frame_width="1000"; 
@@ -151,20 +162,15 @@ $(function(){
 					rssfeed_item_description_tag="on"; 
 					rssfeed_no_items="0"; 
 					rssfeed_cache = "f4a4415443e34553204f13e40f9b665c"; 
-					//--> 
 					</script> 
 					<script type="text/javascript" src="//feed.surfing-waves.com/js/rss-feed.js"></script> 
-					<!-- The link below helps keep this service FREE, and helps other people find the SW widget. Please be cool and keep it! Thanks. --> 
 					<div style="text-align:right; width:800px;"><a href="http://www.surfing-waves.com/feed.htm" target="_blank" style="color:#55a0ff;font-size:10px">feedwidget @</a> <a href="http://www.surfing-waves.com" target="_blank" style="color:#55a0ff;font-size:10px">Surfing Waves</a></div> 
-					<!-- end sw-rss-feed code -->
-				</p>
-			</div>
-			<div id="tab2" class="tab_content">
-				<h2>財經新聞</h2>
-				<p>
-					<!-- start sw-rss-feed code --> 
+					</p>
+				</div>
+				<div id="tab2" class="tab_content">
+					<h2>財經新聞</h2>
+					<p>
 					<script type="text/javascript"> 
-					<!-- 
 					rssfeed_url = new Array(); 
 					rssfeed_url[0]="https://news.google.com/news/rss/headlines/section/topic/BUSINESS.zh-TW_tw/%E8%B2%A1%E7%B6%93?ned=tw&hl=zh-TW";  
 					rssfeed_frame_width="1000"; 
@@ -201,20 +207,15 @@ $(function(){
 					rssfeed_item_description_tag="on"; 
 					rssfeed_no_items="0"; 
 					rssfeed_cache = "212c976b414aec746f9772686bffd7e1"; 
-					//--> 
 					</script> 
 					<script type="text/javascript" src="//feed.surfing-waves.com/js/rss-feed.js"></script> 
-					<!-- The link below helps keep this service FREE, and helps other people find the SW widget. Please be cool and keep it! Thanks. --> 
 					<div style="text-align:right; width:1000px;"><a href="http://www.surfing-waves.com/feed.htm" target="_blank" style="color:#ccc;font-size:10px">feedwidget @</a> <a href="http://www.surfing-waves.com" target="_blank" style="color:#ccc;font-size:10px">Surfing Waves</a></div> 
-					<!-- end sw-rss-feed code -->
-				</p>
-			</div>
-			<div id="tab3" class="tab_content">
-				<h2>體育新聞</h2>
-				<p>
-					<!-- start sw-rss-feed code --> 
+					</p>
+				</div>
+				<div id="tab3" class="tab_content">
+					<h2>體育新聞</h2>
+					<p>
 					<script type="text/javascript"> 
-					<!-- 
 					rssfeed_url = new Array(); 
 					rssfeed_url[0]="https://news.google.com/news/rss/headlines/section/topic/SPORTS.zh-TW_tw/%E9%AB%94%E8%82%B2?ned=tw&hl=zh-TW";  
 					rssfeed_frame_width="1000"; 
@@ -251,20 +252,15 @@ $(function(){
 					rssfeed_item_description_tag="on"; 
 					rssfeed_no_items="0"; 
 					rssfeed_cache = "212c976b414aec746f9772686bffd7e1"; 
-					//--> 
 					</script> 
 					<script type="text/javascript" src="//feed.surfing-waves.com/js/rss-feed.js"></script> 
-					<!-- The link below helps keep this service FREE, and helps other people find the SW widget. Please be cool and keep it! Thanks. --> 
 					<div style="text-align:right; width:1000px;"><a href="http://www.surfing-waves.com/feed.htm" target="_blank" style="color:#ccc;font-size:10px">feedwidget @</a> <a href="http://www.surfing-waves.com" target="_blank" style="color:#ccc;font-size:10px">Surfing Waves</a></div> 
-					<!-- end sw-rss-feed code -->
-				</p>
-			</div>
-			<div id="tab4" class="tab_content">
-				<h2>娛樂新聞</h2>
-				<p>
-					<!-- start sw-rss-feed code --> 
+					</p>
+				</div>
+				<div id="tab4" class="tab_content">
+					<h2>娛樂新聞</h2>
+					<p>
 					<script type="text/javascript"> 
-					<!-- 
 					rssfeed_url = new Array(); 
 					rssfeed_url[0]="https://news.google.com/news/rss/headlines/section/topic/ENTERTAINMENT.zh-TW_tw/%E5%A8%9B%E6%A8%82?ned=tw&hl=zh-TW";  
 					rssfeed_frame_width="1000"; 
@@ -301,20 +297,15 @@ $(function(){
 					rssfeed_item_description_tag="on"; 
 					rssfeed_no_items="0"; 
 					rssfeed_cache = "212c976b414aec746f9772686bffd7e1"; 
-					//--> 
 					</script> 
 					<script type="text/javascript" src="//feed.surfing-waves.com/js/rss-feed.js"></script> 
-					<!-- The link below helps keep this service FREE, and helps other people find the SW widget. Please be cool and keep it! Thanks. --> 
 					<div style="text-align:right; width:1000px;"><a href="http://www.surfing-waves.com/feed.htm" target="_blank" style="color:#ccc;font-size:10px">feedwidget @</a> <a href="http://www.surfing-waves.com" target="_blank" style="color:#ccc;font-size:10px">Surfing Waves</a></div> 
-					<!-- end sw-rss-feed code -->
-				</p>
-			</div>
-			<div id="tab5" class="tab_content">
-				<h2>健康新聞</h2>
-				<p>
-					<!-- start sw-rss-feed code --> 
+					</p>
+				</div>
+				<div id="tab5" class="tab_content">
+					<h2>健康新聞</h2>
+					<p>
 					<script type="text/javascript"> 
-					<!-- 
 					rssfeed_url = new Array(); 
 					rssfeed_url[0]="https://news.google.com/news/rss/headlines/section/topic/HEALTH.zh-TW_tw/%E5%81%A5%E5%BA%B7?ned=tw&hl=zh-TW";  
 					rssfeed_frame_width="1000"; 
@@ -351,17 +342,14 @@ $(function(){
 					rssfeed_item_description_tag="on"; 
 					rssfeed_no_items="0"; 
 					rssfeed_cache = "212c976b414aec746f9772686bffd7e1"; 
-					//--> 
 					</script> 
 					<script type="text/javascript" src="//feed.surfing-waves.com/js/rss-feed.js"></script> 
-					<!-- The link below helps keep this service FREE, and helps other people find the SW widget. Please be cool and keep it! Thanks. --> 
 					<div style="text-align:right; width:1000px;"><a href="http://www.surfing-waves.com/feed.htm" target="_blank" style="color:#ccc;font-size:10px">feedwidget @</a> <a href="http://www.surfing-waves.com" target="_blank" style="color:#ccc;font-size:10px">Surfing Waves</a></div> 
-					<!-- end sw-rss-feed code -->
-				</p>
-			</div>
-			<div id="tab6" class="tab_content">
-				<h2>自行搜尋</h2>
-				<p>
+					</p>
+				</div>
+				<div id="tab6" class="tab_content">
+					<h2>自行搜尋</h2>
+					<p>
 					<script>
 					  (function() {
 						var cx ="009176888921136919459:w3ebnhvtw90";
@@ -374,15 +362,10 @@ $(function(){
 					  })();
 					</script>
 					<gcse:search></gcse:search>
-				</p>
+					</p>
+				</div>
 			</div>
 		</div>
 	</div>
-	</div>
-
-
-
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script type="text/javascript" src="js/custom.js"></script>
 </html>
