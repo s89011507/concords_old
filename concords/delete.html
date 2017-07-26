@@ -52,7 +52,7 @@
 	
 </body>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/custom.js"></script>
 
 <script>
@@ -60,21 +60,14 @@
 $(document).ready(function(){
 
 	$(window).load(function(){
-		$.ajax({
-			url: 'session.php',
-			type : "POST",
-			dataType : 'json',
-			success:function(result){
-				if (result.status=="yes"){
-				}
-				else{
-					window.location.replace('login_wrong.html');
-				}
-			},
-			error:function(result) {
-				console.log(JSON.stringify(result));
-			}
-		});
+			
+		if(localStorage["id"] != null){
+			console.log(localStorage["id"]);
+		}
+		else{
+			console.log(localStorage["id"]);
+			window.location.replace('login_wrong.html');
+		}	
 	});
  
 	$("#delete").on('click', function(){

@@ -34,6 +34,12 @@
 				<div class="form-group">
 					<div class="col-sm-10">												 
 						<input type="text" name="id" id="id" class="form-control" placeholder="帳號"/>
+						<h4>
+						<div id="checkidbox" class="label label-info">
+							<span id="checkidicon" class="glyphicon glyphicon-user"></span>
+							<span id="checkid" >驗證帳號</span> 							
+						</div>
+						</h4>
 						<input type="password" name="pw" id="pw" class="form-control" placeholder="密碼"/> 
 						<input type="password" name="pw2" id="pw2" class="form-control" placeholder="再一次輸入密碼"/> 
 					</div>
@@ -43,8 +49,20 @@
 					<div class="col-sm-10">												 
 						<input type="text" name="name" id="name" class="form-control" placeholder="姓名"/>
 						<input type="text" name="lineid" id="lineid" class="form-control" placeholder="LINEID"/>
-						<input type="text" name="mailbox" id="mailbox" class="form-control" placeholder="信箱"/>
+						<input type="text" name="mailbox" id="mailbox" class="form-control " placeholder="信箱"/>
+						<h4>
+						<div id="emailbox" class="label label-info">
+							<span id="emailicon" class="glyphicon glyphicon-envelope"></span>
+							<span id="emailid" >請輸入正確的信箱</span> 							
+						</div>
+						</h4>
 						<input type="text" name="cellphone" id="cellphone" class="form-control" placeholder="手機"/>
+						<h4>
+						<div id="phonebox" class="label label-info">
+							<span id="phoneicon" class="glyphicon glyphicon-phone"></span>
+							<span id="phoneid" >請輸入正確的手機</span> 							
+						</div>
+						</h4>
 					</div>
 				</div>
 
@@ -56,7 +74,7 @@
 				
 				<div class="form-group">
 					<div class="col-sm-10">
-						<button class="btn btn-lg btn-danger btn-block" id="register" name="register" >確認</button>
+						<button class="btn btn-lg btn-danger btn-block" id="register" name="register" >申請確認</button>
 					</div>
 				</div>
 				<br><br><br><br><br><br><br>
@@ -64,11 +82,99 @@
 		</div>
 	</div>
 	
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/custom.js"></script>
 <script>
     $(document).ready(function(){
-     
+		
+		$('#mailbox').on('keyup',function() {
+			var mailbox = $('#mailbox').val();
+			if (mailbox == null){
+				$("#emailbox").removeClass().addClass("label label-info");
+				$("#emailid").text("請輸入正確的信箱");
+				$("#register").attr('disabled', false);
+				$("#register").text("申請確認");
+			}
+			else{
+				if(mailbox.match(/^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})*$/)){
+				$("#emailbox").removeClass().addClass("label label-success");
+				$("#emailid").text("輸入正確");
+				$("#register").attr('disabled', false);
+				$("#register").text("申請確認");
+				} 
+				else{
+				$("#emailbox").removeClass().addClass("label label-danger");
+				$("#emailid").text("請輸入正確的信箱");
+				$("#register").attr('disabled', true);
+				$("#register").text("信箱輸入錯誤");
+				}
+			}
+			
+		});
+		
+		$('#cellphone').on('keyup',function() {
+			var cellphone = $('#cellphone').val();
+			if (phonebox == null){
+				$("#phonebox").removeClass().addClass("label label-info");
+				$("#phoneid").text("請輸入正確的手機");
+				$("#register").attr('disabled', false);
+				$("#register").text("申請確認");
+			}
+			else{
+				if(cellphone.match(/^09\d{8}$/)){
+				$("#phonebox").removeClass().addClass("label label-success");
+				$("#phoneid").text("輸入正確");
+				$("#register").attr('disabled', false);
+				$("#register").text("申請確認");
+				} 
+				else{
+				$("#phonebox").removeClass().addClass("label label-danger");
+				$("#phoneid").text("請輸入正確的手機");
+				$("#register").attr('disabled', true);
+				$("#register").text("信箱輸入錯誤");
+				}
+			}
+		});
+	
+	
+		$("#id").on('keyup', function(){
+			var cid = $('#id').val();
+			$.ajax({
+				
+				url: 'checkid.php',
+				type : "POST",
+				dataType : 'json',
+				data:{cid:cid},
+				
+                success:function(result){
+					if(result.check=="empty"){
+						$("#checkidbox").removeClass().addClass("label label-info");
+						$("#checkidicon").removeClass().addClass("glyphicon glyphicon-user");
+						$("#checkid").text("驗證帳號");
+						$("#register").attr('disabled', false);
+						$("#register").text("申請確認");
+					}
+					else if(result.check=="yes"){
+						$("#checkidbox").removeClass().addClass("label label-success");
+						$("#checkidicon").removeClass().addClass("glyphicon glyphicon-ok");
+						$("#checkid").text("可使用此帳號");
+						$("#register").attr('disabled', false);
+						$("#register").text("申請確認");
+					}
+					else{
+						$("#checkidbox").removeClass().addClass("label label-danger");
+						$("#checkidicon").removeClass().addClass("glyphicon glyphicon-remove");
+						$("#checkid").text("已有人使用");
+						$("#register").attr('disabled', true);
+						$("#register").text("請更換帳號");
+					}
+                },
+                error:function(result) {
+                   	console.log(JSON.stringify(result));
+                }
+            });	
+		});
+		
         $("#register").on('click', function(){
 			var id = $('#id').val();
 			var pw = $('#pw').val();
@@ -86,13 +192,15 @@
 				data:{id:id,pw:pw,pw2:pw2,name:name,lineid:lineid,mailbox:mailbox,cellphone:cellphone},
 				
                 success:function(result){
-					if (result.register=="admin"){
-						alert("新增成功");
-						window.location.replace('admin.html');
-					}
-					else if(result.register=="yes"){
-						alert("新增成功");
-						window.location.replace('index.html');
+					if (result.register=="yes"){
+						if(localStorage["id"]=="admin"){
+							alert("新增成功");
+							window.location.replace('admin.html');
+						}
+						else{
+							alert("新增成功");
+							window.location.replace('index.html');
+						}
 					}
 					else if(result.register=="no"){
 						alert("新增失敗");

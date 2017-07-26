@@ -2,7 +2,7 @@
 /*
 更新資料庫的密碼及個人資料
 */
-session_start(); 
+
 $con = mysqli_connect("localhost","root","1234","test");
 
 mysqli_set_charset($con,"utf8");
@@ -11,9 +11,9 @@ if (mysqli_connect_errno()){
   echo "Failed to connect to MySQL: " . mysqli_connect_error();
 };
 
-$id=$_SESSION['id'];
-$password = $_POST['password'];
-$password2 = $_POST['password2'];
+$id=$_POST['id'];
+$password = MD5($_POST['password']);
+$password2 = MD5($_POST['password2']);
 $name = $_POST['name'];
 $mailbox = $_POST['mailbox'];
 $lineid = $_POST['lineid'];

@@ -1,7 +1,7 @@
 <html>
 <!--
 首頁
-登入及連結申請帳號頁面
+登入
 -->
 <head>
     <style>
@@ -74,7 +74,7 @@
         <br/><br/>
     </div>
 	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/custom.js"></script>
 	<script>
 
@@ -86,17 +86,20 @@
 				var id = $('#id').val();
 				var pw = $('#pw').val();
 				$.ajax({
-					url: './connect.php',
+					url: 'http://192.168.103.208/concords/connect.php',
 					type : "POST",
 					dataType : 'json',
 					data:{id:id,pw:pw},
 					
 					success:function(result){
 						if (result.status==1){
-							alert("歡迎登入:"+result.name);
+							localStorage["id"]=$('#id').val();
+							alert("歡迎登入:"+localStorage["id"]);
+							
 							window.location.replace('connect_user.html');
 						}
 						else if (result.status==2){
+							localStorage["id"]=$('#id').val();
 							alert("歡迎登入管理者");
 							window.location.replace('connect_admin.html');
 						}
@@ -118,7 +121,7 @@
 
     </div>
 </footer>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/custom.js"></script>
 </html>
 

@@ -4,49 +4,90 @@
 觀看新聞&修改帳號內容
 -->
 <head>
-    <style>
+       <style>
+		#category {
+		
+			border: none;
+			color: #fff;
+			background-color:#da2f1b;
+			padding: 15px 60px;
+			text-align: center;
+			display: inline-block;
+			font-size: 16px;
+		}
+		#logout2 {
+		
+			border: none;
+			color: #fff;
+			background-color:#da2f1b;
+			padding: 15px 60px;
+			text-align: center;
+			display: inline-block;
+			font-size: 16px;
+		}
+		
+		.cse .gsc-control-cse, .gsc-control-cse{
+			background-color:#FFFFFF!important;
+		}
+		.gsc-adBlock{
+			display:none!important;
+		}
+		
         .place {
             margin-top: 50px;
         }
 		body {
-			background-image: url("images/breaking_news.jpg");
-			background-size: 100%;	
+			background-image:url("images/secondback.jpg")
+		}
+		table {
+			border-collapse: collapse;
+			width: 70%;
+			border-color:#fff;
+		}
+		th, td {
+			padding: 8px;
+		}
+		tr:nth-child(even){background-color: #f2f2f2;text-align: center;}
+		th {
+			font-align:right;
+			background-color: rgba(218,47,27,0.8);
+			color: white;
+			font-size: 20px ;
 		}
     </style>
-	
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="favicon.ico">
-    <title>好康報報|使用者</title>
+    <title>好康報報|管理者</title>
     <link href='https://fonts.googleapis.com/css?family=Playfair+Display:900|Raleway:300' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/ie10-viewport-bug-workaround.css">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/signin.css">
+	<link rel="stylesheet" href="css/signin.css">
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	
+</head>
+
+<header>
+</header>
+
+<body>
+
+	<script src=""js/jquery.min.js""></script>
 	<script type="text/javascript" src="js/custom.js"></script>
 	<script>
 	$(document).ready(function(){
 	
 		$(window).load(function(){
-			$.ajax({
-				url: 'session.php',
-				type : "POST",
-				dataType : 'json',
-				success:function(result){
-					if (result.status=="yes"){
-					}
-					else{
-						window.location.replace('login_wrong.html');
-					}
-				},
-				error:function(result) {
-					console.log(JSON.stringify(result));
-				}
-			});
+			
+			if(localStorage["id"] != null){
+				console.log(localStorage["id"]);
+			}
+			else{
+				console.log(localStorage["id"]);
+				window.location.replace('login_wrong.html');
+			}	
 		});
 		
 		$("#logout2").on('click', function(){
@@ -94,41 +135,35 @@
 	});
 	
 	</script>
-</head>
-
-<header>
-</header>
-
-<body>
-	<br><br><br>
-	<div class="form-horizontal col-md-12 col-xs-12 ">
-		<a id="logout2" class="button1">登出</a>
-		<a href="update.html" class="button1">修改</a>
-		<br><br>
-	</div>
 	
-	<div class="abgne_tab" id="b" >
-		<ul class="tabs" class="form-horizontal col-md-12 col-xs-12">
-			<br>
-			<a><button href="#tab1" class="button1">本日焦點</button></a>
-			<a><button href="#tab2" class="button1">財經新聞</button></a>
-			<a><button href="#tab3" class="button1">體育新聞</button></a>
+	<br><br><br>
+	<div class="abgne_tab  col-sm-12 col-md-12 col-xs-12"  >
+	<a href="connect_logout.html" id="category">登出</a>
+	<a href="update.html" id="category">修改</a>
+	</div>
+	<div class="abgne_tab  col-sm-12 col-md-12 col-xs-12"  >
+		<ul class="tabs ">
+			
+			
 			<br><br>
-			<a><button href="#tab4" class="button1">娛樂新聞</button></a>
-			<a><button href="#tab5" class="button1">健康新聞</button></a>
-			<a><button href="#tab6" class="button1">自訂搜尋</button></a>		
+			<a><button href="#tab1" id="category">本日焦點</button></a>
+			<a><button href="#tab2" id="category">財經新聞</button></a>
+			<a><button href="#tab3" id="category">體育新聞</button></a>
+			<a><button href="#tab4" id="category">娛樂新聞</button></a>
+			<a><button href="#tab5" id="category">健康新聞</button></a>
+			<a><button href="#tab6" id="category">自訂搜尋</button></a>		
 		</ul>
 
 		
-		<div class="form-horizontal col-md-12 col-xs-12 col-md-offset">
+		<div class="col-sm-10 col-md-10 col-xs-10 col-xs-offset-1" >
 			<div class="tab_container">
 				<div id="tab1" class="tab_content">
 					<h2>本日新聞</h2>
 					<p>
 					<script type="text/javascript"> 
 					rssfeed_url = new Array(); 
-					rssfeed_url[0]="https://news.google.com/news/rss/headlines?ned=tw&hl=zh-TW";  
-					rssfeed_frame_width="1000"; 
+					rssfeed_url[0]="https://news.google.com/news/rss/?ned=tw&hl=zh-TW";  
+					rssfeed_frame_width="700"; 
 					rssfeed_frame_height="2000"; 
 					rssfeed_scroll="off"; 
 					rssfeed_scroll_step="6"; 
@@ -173,7 +208,7 @@
 					<script type="text/javascript"> 
 					rssfeed_url = new Array(); 
 					rssfeed_url[0]="https://news.google.com/news/rss/headlines/section/topic/BUSINESS.zh-TW_tw/%E8%B2%A1%E7%B6%93?ned=tw&hl=zh-TW";  
-					rssfeed_frame_width="1000"; 
+					rssfeed_frame_width="700"; 
 					rssfeed_frame_height="1000"; 
 					rssfeed_scroll="off"; 
 					rssfeed_scroll_step="6"; 
@@ -218,7 +253,7 @@
 					<script type="text/javascript"> 
 					rssfeed_url = new Array(); 
 					rssfeed_url[0]="https://news.google.com/news/rss/headlines/section/topic/SPORTS.zh-TW_tw/%E9%AB%94%E8%82%B2?ned=tw&hl=zh-TW";  
-					rssfeed_frame_width="1000"; 
+					rssfeed_frame_width="700"; 
 					rssfeed_frame_height="1000"; 
 					rssfeed_scroll="off"; 
 					rssfeed_scroll_step="6"; 
@@ -263,7 +298,7 @@
 					<script type="text/javascript"> 
 					rssfeed_url = new Array(); 
 					rssfeed_url[0]="https://news.google.com/news/rss/headlines/section/topic/ENTERTAINMENT.zh-TW_tw/%E5%A8%9B%E6%A8%82?ned=tw&hl=zh-TW";  
-					rssfeed_frame_width="1000"; 
+					rssfeed_frame_width="700"; 
 					rssfeed_frame_height="1000"; 
 					rssfeed_scroll="off"; 
 					rssfeed_scroll_step="6"; 
@@ -308,7 +343,7 @@
 					<script type="text/javascript"> 
 					rssfeed_url = new Array(); 
 					rssfeed_url[0]="https://news.google.com/news/rss/headlines/section/topic/HEALTH.zh-TW_tw/%E5%81%A5%E5%BA%B7?ned=tw&hl=zh-TW";  
-					rssfeed_frame_width="1000"; 
+					rssfeed_frame_width="700"; 
 					rssfeed_frame_height="1000"; 
 					rssfeed_scroll="off"; 
 					rssfeed_scroll_step="6"; 
