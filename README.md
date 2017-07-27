@@ -2,7 +2,7 @@
 this is the concords test  website
 ___
 # 第四版本
-__改成由local來存session,這樣server端才不會爆炸__
+__V4 userlocalstorage & newJS__
+改成由local來存session,這樣server端才不會爆炸
+js載在本地端
 
-__js載在本地端__
-___
